@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Richiedi Preventivo - Assicurazioni Caccia & C. SAS</title>
+  <meta name="description" content="Richiedi un preventivo assicurativo gratuito e senza impegno.">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .form-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--c-primary);
+      border-radius: 12px;
+      padding: 3rem;
+      color: var(--c-white);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    /* Progress Bar */
+    .progress-bar {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+    .progress-bar::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: rgba(250, 248, 245, 0.2);
+      z-index: 1;
+      transform: translateY(-50%);
+    }
+    .progress-line {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background-color: var(--c-secondary);
+      z-index: 2;
+      transform: translateY(-50%);
+      transition: width var(--transition-normal);
+    }
+    .step-indicator {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--c-secondary);
+      color: var(--c-white);
+      border: 2px solid rgba(250, 248, 245, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      z-index: 3;
+      transition: all var(--transition-normal);
+      color: rgba(250, 248, 245, 0.5);
+    }
+    .step-indicator.active {
+      border-color: var(--c-secondary);
+      background-color: var(--c-secondary);
+      color: var(--c-white);
+    }
+    .step-indicator.completed {
+      border-color: var(--c-secondary);
+      color: var(--c-secondary);
+    }
+
+    /* Form Steps */
+    .form-step {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+    .form-step.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--c-neutral);
+      font-size: 0.95rem;
+    }
+    .form-control {
+      width: 100%;
+      padding: 1rem;
+      border: 1px solid rgba(250, 248, 245, 0.2);
+      background-color: rgba(250, 248, 245, 0.05);
+      color: var(--c-white);
+      border-radius: 4px;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      transition: border-color var(--transition-fast);
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: var(--c-secondary);
+    }
+    .form-control::placeholder {
+      color: rgba(250, 248, 245, 0.4);
+    }
+    select.form-control {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23C9A96E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+    }
+    select.form-control option {
+      background-color: var(--c-surface);
+      border-radius: 12px;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2rem;
+    }
+    
+    .radio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .radio-card {
+      position: relative;
+    }
+    .radio-card input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .radio-card label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      border: 1px solid rgba(250, 248, 245, 0.2);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-align: center;
+      margin: 0;
+    }
+    .radio-card input:checked + label {
+      border-color: var(--c-secondary);
+      background-color: rgba(201, 169, 110, 0.1);
+    }
+
+    /* Success Message */
+    .success-message {
+      display: none;
+      text-align: center;
+      padding: 3rem 0;
+    }
+    .success-message.active {
+      display: block;
+    }
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background-color: var(--c-secondary);
+      color: var(--c-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .form-container { padding: 2rem 1.5rem; }
+      .btn-group { flex-direction: column-reverse; gap: 1rem; }
+      .btn-group .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <main style="padding-top: 90px;">
+    <!-- Form Section -->
+    <section class="section" style="min-height: calc(100vh - 90px); display: flex; align-items: center;">
+      <div class="container fade-in">
+        <div class="form-container">
+          
+          <div id="formContent">
+            <div class="text-center" style="margin-bottom: 2rem;">
+              <h1 style="color: var(--c-white); font-size: 2.5rem; margin-bottom: 0.5rem;">Richiedi un <span class="text-highlight">Preventivo</span></h1>
+              <p style="color: rgba(250, 248, 245, 0.8);">Compila il form per ricevere una proposta personalizzata dai nostri consulenti.</p>
+            </div>
+
+            <div class="progress-bar">
+              <div class="progress-line" id="progressLine"></div>
+              <div class="step-indicator active" data-step="1">1</div>
+              <div class="step-indicator" data-step="2">2</div>
+              <div class="step-indicator" data-step="3">3</div>
+            </div>
+
+            <form id="preventivoForm">
+              <!-- Step 1: Tipo Polizza -->
+              <div class="form-step active" id="step1">
+                <h3 style="color: var(--c-secondary); margin-bottom: 1.5rem;">A cosa sei interessato?</h3>
+                <div class="radio-grid">
+                  <div class="radio-card">
+                    <input type="radio" name="tipo_polizza" id="polizza_auto" value="Auto & Moto" required>
+                    <label for="polizza_auto">Auto & Moto</label>
+                  </div>
+                  <div class="radio-card">
+                    <input type="radio" name="tipo_polizza" id="polizza_casa" value="Casa & Famiglia">
+                    <label for="polizza_casa">Casa & Famiglia</label>
+                  </div>
+                  <div class="radio-card">
+                    <input type="radio" name="tipo_polizza" id="polizza_imprese" value="Imprese & Professionisti">
+                    <label for="polizza_imprese">Imprese & Professionisti</label>
+                  </div>
+                  <div class="radio-card">
+                    <input type="radio" name="tipo_polizza" id="polizza_vita" value="Vita & Salute">
+                    <label for="polizza_vita">Vita & Salute</label>
+                  </div>
+                  <div class="radio-card">
+                    <input type="radio" name="tipo_polizza" id="polizza_risparmio" value="Risparmio & Previdenza">
+                    <label for="polizza_risparmio">Risparmio & Previdenza</label>
+                  </div>
+                  <div class="radio-card">
+                    <input type="radio" name="tipo_polizza" id="polizza_altro" value="Altro">
+                    <label for="polizza_altro">Altro</label>
+                  </div>
+                </div>
+                <div class="btn-group" style="justify-content: flex-end;">
+                  <button type="button" class="btn btn-primary next-btn">Avanti &rarr;</button>
+                </div>
+              </div>
+
+              <!-- Step 2: Dati Personali -->
+              <div class="form-step" id="step2">
+                <h3 style="color: var(--c-secondary); margin-bottom: 1.5rem;">I tuoi dati</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                  <div class="form-group">
+                    <label for="nome">Nome e Cognome *</label>
+                    <input type="text" id="nome" name="nome" class="form-control" required placeholder="Es. Mario Rossi">
+                  </div>
+                  <div class="form-group">
+                    <label for="telefono">Telefono *</label>
+                    <input type="tel" id="telefono" name="telefono" class="form-control" required placeholder="Es. 333 1234567">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="email">Indirizzo Email *</label>
+                  <input type="email" id="email" name="email" class="form-control" required placeholder="Es. mario.rossi@email.com">
+                </div>
+                <div class="form-group">
+                  <label for="sede">Sede di preferenza</label>
+                  <select id="sede" name="sede" class="form-control">
+                    <option value="indifferente">Indifferente</option>
+                    <option value="saronno">Saronno</option>
+                    <option value="busto">Busto Arsizio</option>
+                  </select>
+                </div>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-outline prev-btn" style="color: white; border-color: white;">&larr; Indietro</button>
+                  <button type="button" class="btn btn-primary next-btn">Avanti &rarr;</button>
+                </div>
+              </div>
+
+              <!-- Step 3: Note e Privacy -->
+              <div class="form-step" id="step3">
+                <h3 style="color: var(--c-secondary); margin-bottom: 1.5rem;">Dettagli aggiuntivi</h3>
+                <div class="form-group">
+                  <label for="messaggio">Note o dettagli (opzionale)</label>
+                  <textarea id="messaggio" name="messaggio" class="form-control" rows="4" placeholder="Scrivi qui eventuali dettagli utili per il preventivo (es. targa veicolo, tipo di attività commerciale...)"></textarea>
+                </div>
+                
+                <div class="form-group" style="margin-top: 2rem; display: flex; align-items: flex-start; gap: 0.5rem;">
+                  <input type="checkbox" id="privacy" name="privacy" required style="margin-top: 0.2rem;">
+                  <label for="privacy" style="font-size: 0.85rem; color: rgba(250, 248, 245, 0.7); cursor: pointer;">
+                    Ho letto e accetto l'<a href="#" style="color: var(--c-secondary); text-decoration: underline;">Informativa sulla Privacy</a>. Acconsento al trattamento dei miei dati personali per gestire la richiesta di preventivo. *
+                  </label>
+                </div>
+
+                <div class="btn-group">
+                  <button type="button" class="btn btn-outline prev-btn" style="color: white; border-color: white;">&larr; Indietro</button>
+                  <button type="submit" class="btn btn-primary">Invia Richiesta</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Success Message -->
+          <div id="successMessage" class="success-message">
+            <div class="success-icon fade-in">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <h2 style="color: var(--c-white); margin-bottom: 1rem;" class="fade-in">Richiesta Inviata con <span class="text-highlight">Successo!</span></h2>
+            <p style="color: rgba(250, 248, 245, 0.8); margin-bottom: 2rem;" class="fade-in">Grazie per averci contattato. Un nostro consulente prenderà in carico la tua richiesta e ti contatterà al più presto con una proposta personalizzata.</p>
+            <a href="index.html" class="btn btn-outline fade-in" style="color: white; border-color: white;">Torna alla Home</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <script src="app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Setup URL parameter selection if coming from service page
+      const urlParams = new URLSearchParams(window.location.search);
+      const polizzaParam = urlParams.get('polizza');
+      if (polizzaParam) {
+        const radio = document.getElementById('polizza_' + polizzaParam);
+        if (radio) radio.checked = true;
+      }
+
+      const steps = document.querySelectorAll('.form-step');
+      const indicators = document.querySelectorAll('.step-indicator');
+      const progressLine = document.getElementById('progressLine');
+      const nextBtns = document.querySelectorAll('.next-btn');
+      const prevBtns = document.querySelectorAll('.prev-btn');
+      const form = document.getElementById('preventivoForm');
+      
+      let currentStep = 0;
+
+      function updateUI() {
+        // Update Steps
+        steps.forEach((step, index) => {
+          step.classList.toggle('active', index === currentStep);
+        });
+        
+        // Update Indicators
+        indicators.forEach((indicator, index) => {
+          if (index < currentStep) {
+            indicator.classList.add('completed');
+            indicator.classList.remove('active');
+          } else if (index === currentStep) {
+            indicator.classList.add('active');
+            indicator.classList.remove('completed');
+          } else {
+            indicator.classList.remove('active', 'completed');
+          }
+        });
+
+        // Update Progress Line
+        progressLine.style.width = (currentStep * 50) + '%';
+      }
+
+      function validateStep() {
+        const currentInputs = steps[currentStep].querySelectorAll('input[required], textarea[required]');
+        let isValid = true;
+        
+        if (currentStep === 0) {
+          const radioChecked = steps[currentStep].querySelector('input[type="radio"]:checked');
+          if (!radioChecked) isValid = false;
+        } else {
+          currentInputs.forEach(input => {
+            if (!input.value.trim() || (input.type === 'checkbox' && !input.checked) || (input.type === 'email' && !input.validity.valid)) {
+              isValid = false;
+              input.style.borderColor = 'red';
+            } else {
+              input.style.borderColor = 'rgba(250, 248, 245, 0.2)';
+            }
+          });
+        }
+        
+        return isValid;
+      }
+
+      nextBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (validateStep()) {
+            if (currentStep < steps.length - 1) {
+              currentStep++;
+              updateUI();
+            }
+          } else {
+            alert('Per favore, compila tutti i campi obbligatori correttamente prima di proseguire.');
+          }
+        });
+      });
+
+      prevBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (currentStep > 0) {
+            currentStep--;
+            updateUI();
+          }
+        });
+      });
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (validateStep()) {
+          // Simulate API call
+          const submitBtn = form.querySelector('button[type="submit"]');
+          submitBtn.textContent = 'Invio in corso...';
+          submitBtn.disabled = true;
+          
+          setTimeout(() => {
+            document.getElementById('formContent').style.display = 'none';
+            const successMsg = document.getElementById('successMessage');
+            successMsg.classList.add('active');
+            // Trigger animations in success message manually if needed
+          }, 1500);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

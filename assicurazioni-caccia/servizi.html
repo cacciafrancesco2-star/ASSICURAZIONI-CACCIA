@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I Nostri Servizi - Assicurazioni Caccia & C. SAS</title>
+  <meta name="description" content="Soluzioni assicurative su misura per auto, casa, vita, risparmio, imprese e viaggi a Saronno e Busto Arsizio.">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .service-detail-section {
+      padding: var(--spacing-lg) 0;
+      border-bottom: 1px solid rgba(13, 31, 60, 0.1);
+    }
+    .service-detail-section:last-child {
+      border-bottom: none;
+    }
+    .service-header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .service-header-icon {
+      width: 64px;
+      height: 64px;
+      background-color: var(--c-primary);
+      color: var(--c-secondary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .service-header-icon svg { width: 32px; height: 32px; }
+    
+    .benefits-list {
+      list-style: none;
+      margin-top: 1.5rem;
+    }
+    .benefits-list li {
+      position: relative;
+      padding-left: 2rem;
+      margin-bottom: 0.75rem;
+    }
+    .benefits-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--c-secondary);
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    .service-img-wrapper {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      height: 100%;
+      min-height: 300px;
+    }
+    .service-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+  <main style="padding-top: 90px;">
+    <!-- Page Header -->
+    <section class="section" style="padding-bottom: 4rem;">
+      <div class="container text-center fade-in">
+        <h1 style="margin-bottom: 1rem;">Le Nostre <span class="text-highlight">Soluzioni</span></h1>
+        <p style="max-width: 600px; margin: 0 auto;">Scopri la gamma completa di servizi assicurativi UnipolSai pensati per garantirti serenità in ogni ambito della tua vita.</p>
+      </div>
+    </section>
+
+    <!-- Auto & Moto -->
+    <section id="auto" class="service-detail-section">
+      <div class="container fade-in">
+        <div style="display: flex; flex-wrap: wrap; gap: 4rem; align-items: center;">
+          <div style="flex: 1; min-width: 300px;">
+            <div class="service-header">
+              <div class="service-header-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a2 2 0 0 0-1.6-.8H7.3a2 2 0 0 0-1.6.8L3 11l-1.16.86a1 1 0 0 0-.84.99V16h3m10 0a2 2 0 1 1-4 0m4 0a2 2 0 1 0-4 0m-6 0a2 2 0 1 1-4 0m4 0a2 2 0 1 0-4 0"></path></svg>
+              </div>
+              <h2 style="margin: 0;">Auto & Moto</h2>
+            </div>
+            <p>La polizza auto non è solo un obbligo di legge, ma la tua principale tutela sulla strada. Offriamo soluzioni personalizzate basate sulle tue reali abitudini di guida, con la garanzia dell'assistenza UnipolSai 24/7.</p>
+            <ul class="benefits-list">
+              <li>RC Auto personalizzabile con scatola nera (Unibox)</li>
+              <li>Coperture Kasko e Mini Kasko</li>
+              <li>Furto, incendio e atti vandalici</li>
+              <li>Assistenza stradale h24 con carro attrezzi</li>
+            </ul>
+            <div style="margin-top: 2rem;">
+              <a href="preventivo.html?polizza=auto" class="btn btn-primary">Richiedi Preventivo</a>
+              <a href="https://www.unipolsai.it/mobilita" target="_blank" class="btn btn-outline" style="margin-left: 1rem; border: none; text-decoration: underline;">Approfondisci su UnipolSai</a>
+            </div>
+          </div>
+          <div style="flex: 1; min-width: 300px;">
+            <div class="service-img-wrapper">
+              <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0be2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Assicurazione Auto">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Casa & Famiglia -->
+    <section id="casa" class="service-detail-section">
+      <div class="container fade-in">
+        <div style="display: flex; flex-wrap: wrap; gap: 4rem; align-items: center; flex-direction: row-reverse;">
+          <div style="flex: 1; min-width: 300px;">
+            <div class="service-header">
+              <div class="service-header-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+              </div>
+              <h2 style="margin: 0;">Casa & Famiglia</h2>
+            </div>
+            <p>La casa è il tuo rifugio. Proteggila da danni accidentali, eventi atmosferici estremi e furti. Inoltre, tuteliamo il tuo patrimonio familiare con la Responsabilità Civile del capofamiglia.</p>
+            <ul class="benefits-list">
+              <li>Protezione danni fabbricato e contenuto</li>
+              <li>Furto, rapina e scippo</li>
+              <li>Danni da acqua e fenomeni elettrici</li>
+              <li>RC Famiglia e animali domestici (cane e gatto)</li>
+            </ul>
+            <div style="margin-top: 2rem;">
+              <a href="preventivo.html?polizza=casa" class="btn btn-primary">Richiedi Preventivo</a>
+            </div>
+          </div>
+          <div style="flex: 1; min-width: 300px;">
+            <div class="service-img-wrapper">
+              <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Assicurazione Casa">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Imprese & Professionisti -->
+    <section id="imprese" class="service-detail-section">
+      <div class="container fade-in">
+        <div style="display: flex; flex-wrap: wrap; gap: 4rem; align-items: center;">
+          <div style="flex: 1; min-width: 300px;">
+            <div class="service-header">
+              <div class="service-header-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4"></path><path d="M8 6h.01"></path><path d="M16 6h.01"></path><path d="M12 6h.01"></path><path d="M12 10h.01"></path><path d="M12 14h.01"></path><path d="M16 10h.01"></path><path d="M16 14h.01"></path><path d="M8 10h.01"></path><path d="M8 14h.01"></path></svg>
+              </div>
+              <h2 style="margin: 0;">Imprese & Professionisti</h2>
+            </div>
+            <p>Il tuo business è il frutto di grandi sacrifici. Ti offriamo la tranquillità necessaria per concentrarti sulla crescita della tua azienda, proteggendo immobili, attrezzature e dipendenti.</p>
+            <ul class="benefits-list">
+              <li>Incendio e danni ai beni aziendali</li>
+              <li>Responsabilità Civile Verso Terzi e Prestatori d'Opera (RCT/RCO)</li>
+              <li>Tutela legale aziendale</li>
+              <li>Polizze infortuni per i dipendenti e Key Man</li>
+            </ul>
+            <div style="margin-top: 2rem;">
+              <a href="preventivo.html?polizza=impresa" class="btn btn-primary">Richiedi Consulenza</a>
+            </div>
+          </div>
+          <div style="flex: 1; min-width: 300px;">
+            <div class="service-img-wrapper">
+              <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Assicurazione Imprese">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section" style="background-color: var(--c-secondary); color: var(--c-primary); text-align: center;">
+      <div class="container fade-in">
+        <h2 style="color: var(--c-primary); margin-bottom: 1rem;">Cerchi una copertura <span class="text-highlight">specifica</span>?</h2>
+        <p style="margin-bottom: 2rem; color: #333;">Offriamo anche soluzioni per salute, risparmio gestito, previdenza complementare e polizze viaggi.</p>
+        <a href="preventivo.html" class="btn btn-outline" style="border-color: white; color: white;">Contattaci ora</a>
+      </div>
+    </section>
+
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
